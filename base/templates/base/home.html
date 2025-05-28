@@ -1,0 +1,41 @@
+{% extends 'main.html' %} 
+
+
+{% block css %}
+<style>
+    h5> a {
+        font: oblique;
+        font-style: italic;
+       
+        border: 2px solid;
+
+        padding: 2px;
+        
+    }
+    a:hover{
+        background-color: rgba(18, 212, 154, 0.6);
+    }
+
+    h5 {
+    margin: 30px !important;
+    }
+
+</style>
+  
+{% endblock %}
+
+
+{% block content %}
+
+  <h1>this is home page</h1>
+   
+  <div>
+     
+   {% for room in rooms %} 
+          
+        <!-- <h5>{{room.id}}------ <a href="/room/{{room.id}}">{{room.name}}</a></h5> -->
+       <h5>{{room.id}}------ <a href="{% url 'room' room.id %}">{{room.name}}</a></h5> 
+       <!-- ab chahe urls.py me /room se .rokmv krde lekin koi problem nhi ,  ye name="room" ke kisab se path ka url lega -->
+   {% endfor %}
+  </div>
+{% endblock %}
