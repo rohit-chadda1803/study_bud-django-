@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 
 from django.http import HttpResponse
 
 from .models import Room
+
+from .forms import RoomForm
 
 # rooms =[
    
@@ -39,4 +41,35 @@ def room(request ,pk):
     return render(request , 'base/room.html' , context)
 
 
-# Create your views here.
+def createRoom(request):
+    form = RoomForm
+
+    if request.method == "POST" :
+        # print(request.POST) 
+        form = RoomForm(request.POST) # iss post se voo data lo jo roomform model ki key se match 
+        if form.is_valid():
+            form.save()  #save it in database 
+
+            return redirect('home')
+         
+    context = {'form': form}
+    return render(request , 'base/room_form.html' , context)
+
+
+def updateRoom(request ,pk):
+    room = Room.objects.get(id = pk)
+    
+    form = RoomForm(instance=room) #prefilled with room value . 
+    
+    if request.method == "POST" :
+        # print(request.POST) 
+        form = RoomForm(request.POST , instance=room) # ye room ka instance h , new room nhi bnana . 
+        if form.is_valid():
+            form.save()  #save it in database 
+
+            return redirect('home')
+        
+
+    context = {'form':form}
+
+    return render(request , 'base/room_form.html' , context)

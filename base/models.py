@@ -18,6 +18,10 @@ class Room(models.Model):
     updated = models.DateTimeField(auto_now=True) #last time created /updated . 
     created = models.DateTimeField(auto_now_add=True) # store time created . // only 1 time occurs .
 
+
+    class Meta:
+        ordering =['-updated' , '-created'] # now it will prioritized  or stored & showed   as newest first in ascending order 
+        # remove - to reverse order like , ordering = ['updated']
     def __str__(self):
         return self.name 
     

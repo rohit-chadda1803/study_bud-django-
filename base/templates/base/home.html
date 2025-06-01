@@ -1,41 +1,59 @@
-{% extends 'main.html' %} 
-
-
-{% block css %}
+{% extends 'main.html' %} {% block css %}
 <style>
-    h5> a {
-        font: oblique;
-        font-style: italic;
-       
-        border: 2px solid;
+  h5 > a {
+    font: oblique;
+    font-style: italic;
 
-        padding: 2px;
-        
-    }
-    a:hover{
-        background-color: rgba(18, 212, 154, 0.6);
-    }
+    border: 2px solid;
 
-    h5 {
+    padding: 2px;
+  }
+  a:hover {
+    background-color: rgba(18, 212, 154, 0.6);
+  }
+
+  /* h5 {
     margin: 30px !important;
-    }
-
+    } */
 </style>
-  
-{% endblock %}
 
+{% endblock %} {% block content %}
 
-{% block content %}
+<!-- <h1 class="">this is home page</h1> -->
 
-  <h1>this is home page</h1>
-   
-  <div>
-     
-   {% for room in rooms %} 
-          
-        <!-- <h5>{{room.id}}------ <a href="/room/{{room.id}}">{{room.name}}</a></h5> -->
-       <h5>{{room.id}}------ <a href="{% url 'room' room.id %}">{{room.name}}</a></h5> 
-       <!-- ab chahe urls.py me /room se .rokmv krde lekin koi problem nhi ,  ye name="room" ke kisab se path ka url lega -->
-   {% endfor %}
+<a
+  href="{% url 'create-room' %}"
+  class="m-5 mt-8 bg-purple-700 text-white px-4 py-2 rounded shadow-lg transition duration-300 hover:bg-gradient-to-tr hover:from-white/10 hover:to-purple-800"
+  >Create Room</a
+>
+
+<div>
+  {% for room in rooms %}
+
+  <div
+    class="room border-2 border-green-300 rounded-md m-4 p-4 hover:border-green-500 transition"
+  >
+    <a href="{% url 'update-room' room.id %}" class="bg-green-500">EDit</a>
+
+    <a
+      href="{% url 'update-room' room.id %}"
+      class="m-3 border-1 p-0.5 rounded-md bg-red-500"
+      >Delete</a
+    >
+
+    <span>@{{room.host.username}}</span>
+
+    <!-- <h5>{{room.id}}------ <a href="/room/{{room.id}}">{{room.name}}</a></h5> -->
+    <h5 class="mt-3">
+      {{room.id}}------ <a href="{% url 'room' room.id %}">{{room.name}}</a>
+    </h5>
+    <!-- ab chahe urls.py me /room se .rokmv krde lekin koi problem nhi ,  ye name="room" ke kisab se path ka url lega -->
+
+    <small>{{room.topic.name}}</small>
+
+    <hr />
   </div>
+
+  {% endfor %}
+</div>
 {% endblock %}
