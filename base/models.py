@@ -31,3 +31,22 @@ class Message(models.Model):
     body = models.TextField()
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+
+
+'''
+But Django automatically creates a reverse relationship from Room to Message because of this line in your Message model:
+
+room = models.ForeignKey(Room, on_delete=models.CASCADE)
+
+
+******When you write this in your Message model:
+
+room = models.ForeignKey(Room, on_delete=models.CASCADE)
+You're saying:
+“Each message belongs to one room.”
+
+But Django also gives you something extra automatically:
+
+It creates a reverse link — so from a Room object, you can find all the messages related to it.
+
+'''
