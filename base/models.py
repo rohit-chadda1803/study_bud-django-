@@ -14,7 +14,8 @@ class Room(models.Model):
     topic = models.ForeignKey(Topic , on_delete=models.SET_NULL , null=True) # if topic deleted set null & allow room to be null .
     name = models.CharField(max_length=200)
     description = models.TextField(null=True , blank=True)
-    #participants . 
+    participants = models.ManyToManyField(User , related_name = 'participants' ,blank=True) # many to many relationship , one room can have many participants , and one user can be in many rooms .
+    # related_name = 'participants' means , we can access this room from user model using user.participants.all() to get all rooms , user is participating in .
     updated = models.DateTimeField(auto_now=True) #last time created /updated . 
     created = models.DateTimeField(auto_now_add=True) # store time created . // only 1 time occurs .
 
@@ -31,7 +32,12 @@ class Message(models.Model):
     body = models.TextField()
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
-
+  
+    class Meta:
+        ordering =['-updated' , '-created'] # now it will prioritized  or stored & showed   as newest first in ascending order 
+        # remove - to reverse order like , ordering = ['updated']
+    def __str__(self):
+        return self.body[0:50] 
 
 '''
 But Django automatically creates a reverse relationship from Room to Message because of this line in your Message model:

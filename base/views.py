@@ -96,6 +96,7 @@ def home(request):
     
     if q=='':
         rooms =Room.objects.all()
+        room_messages=Message.objects.all() ; 
     else :
     #    rooms=Room.objects.filter(topic__name__icontains=q)
     #     #__icontains make it case insensitive & half name after 'q=' also vallid , like for q=w it will understand it as q=web%20dev i.e best available topic for autocomplete. 
@@ -106,12 +107,20 @@ def home(request):
             Q(name__icontains=q)
         )
 
+        room_messages = Message.objects.filter(
+            Q(room__name__icontains=q) |
+            Q(room__topic__name__icontains=q) |
+            Q(body__icontains=q) 
+        )
+
        
     topics=Topic.objects.all() 
     
     rooms_count = rooms.count() 
 
-    context = {'rooms':rooms , 'topics':topics , 'rooms_count':rooms_count}
+   
+
+    context = {'rooms':rooms , 'topics':topics , 'rooms_count':rooms_count , 'room_messages':room_messages}
     return render(request , 'base/home.html', context  )
 
 def room(request ,pk):
@@ -123,7 +132,7 @@ def room(request ,pk):
 
     room = Room.objects.get(id=pk)
     room_messages = room.message_set.all().order_by('-created') # get all messages related to this room .
-
+    participants = room.participants.all() # get all participants of this room .
     if request.method == "POST":
         body = request.POST.get('body') # get the body of message from post request .
         
@@ -133,12 +142,12 @@ def room(request ,pk):
               room =room , 
               body=body 
           )
-
+          room.participants.add(request.user) # add user to participants of this room .
           return redirect('room',pk=room.id) # without it ,  work well , lekin isse hm ensure krre ki koi Get wala form ho , ya koi aur issue , i dont care , phir se ye page load krke do , bilkul fresh.  
 
     # print(room_messages) # to check if messages are being fetched or not .
     
-    context = {'room':room , 'room_messages':room_messages} # pass room and messages to template .
+    context = {'room':room , 'room_messages':room_messages , 'participants':participants} # pass room and messages to template .
     
     # return render(request , 'room.html' , {'rooms':rooms})
     
@@ -194,3 +203,16 @@ def deleteroom(request ,pk):
         room.delete() #to delete item from database . 
         return redirect('home')
     return render(request , 'base/delete.html',{'obj':room})
+
+
+@login_required(login_url='login')
+def deleteMessage(request ,pk):
+    message=Message.objects.get(id=pk)
+
+    if request.user != message.user:
+        return HttpResponse("You are not allowed here !  Only writer can update the content of room ")
+
+    if request.method=='POST':
+        message.delete() #to delete item from database . 
+        return redirect('home')
+    return render(request , 'base/delete.html',{'obj':message})

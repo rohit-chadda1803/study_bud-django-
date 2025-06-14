@@ -1,0 +1,14 @@
+
+    <h1 class="text-4xl">Browse Topics</h1>
+    <hr />
+
+    <div>
+      <a href="{% url 'home' %}">All</a>
+    </div>
+
+    {% for topic in topics %}
+    <div>
+      <a href="{% url 'home' %}?q={{topic.name}}">{{topic.name}}</a>
+    </div>
+    <!-- here in href  , q- means query , such url keep on same page & change url in search bar .   -->
+    {% endfor %}
