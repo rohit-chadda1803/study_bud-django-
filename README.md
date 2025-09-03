@@ -16,5 +16,11 @@ Improve mobile responsiveness
 
 📸 Adding some screenshots below — would love feedback from devs, UI folks, or anyone curious 👀👇
 
+![StudyBud Homepage](images/1.jpg)
+![StudyBud Topic Discussion page](images/2.jpg)
+![StudyBud topic Room Owner Profile Page](images/3.jpg)
+![StudyBud discussion page](images/4.jpg)
+![StudyBud LoginPage](images/5.jpg)
+
 
 
