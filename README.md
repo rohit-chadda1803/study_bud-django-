@@ -16,4 +16,6 @@ Improve mobile responsiveness
 
 📸 Adding some screenshots below — would love feedback from devs, UI folks, or anyone curious 👀👇
 
+https://github.com/rohit-chadda1803/study_bud-django-/issues/1#issue-3378556184
+
 
