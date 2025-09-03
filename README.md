@@ -16,4 +16,4 @@ Improve mobile responsiveness
 
 📸 Adding some screenshots below — would love feedback from devs, UI folks, or anyone curious 👀👇
 
-https://media.licdn.com/dms/image/v2/D4D22AQFyRPXMIdGTsg/feedshare-shrink_2048_1536/B4DZeJcvbqHMA4-/0/1750357703571?e=1759968000&v=beta&t=yCcKRQMTbZnVVS2f3XYFVqA6-Ag1JDBCsW3lm9-xPK0
+
